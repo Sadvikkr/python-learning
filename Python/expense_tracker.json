@@ -1,0 +1,10 @@
+[
+    {
+        "expense_name": "Travel ",
+        "expense_amount": 150.0
+    },
+    {
+        "expense_name": "Party",
+        "expense_amount": 1000.0
+    }
+]

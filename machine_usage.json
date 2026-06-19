@@ -1,0 +1,50 @@
+[
+    {
+        "machine": "X",
+        "start": 2,
+        "stop": 5,
+        "usage": 3
+    },
+    {
+        "machine": "New",
+        "start": 3,
+        "stop": 6,
+        "usage": 3
+    },
+    {
+        "machine": "laptop",
+        "start": 2,
+        "stop": 4,
+        "usage": 2
+    },
+    {
+        "machine": "gg",
+        "start": 6,
+        "stop": 8,
+        "usage": 2
+    },
+    {
+        "machine": "Lathe",
+        "start": 2,
+        "stop": 5,
+        "usage": 3
+    },
+    {
+        "machine": "string",
+        "start": 0,
+        "stop": 0,
+        "usage": 0
+    },
+    {
+        "machine": "string",
+        "start": 0,
+        "stop": 0,
+        "usage": 0
+    },
+    {
+        "machine": "Drill",
+        "start": 2,
+        "stop": 7,
+        "usage": 5
+    }
+]
