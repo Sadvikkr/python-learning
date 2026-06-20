@@ -16,7 +16,14 @@ class Employee:
         else:
             print("Normal Salary")
 
+    def update_salary(self, new_salary):
+        self.salary = new_salary        
+
 e1 = Employee("Sadvik", 60000)
 
 e1.show_details()
-e1.check_salary()               
+e1.check_salary()
+e1.update_salary(70000)
+e1.show_details()
+
+               
