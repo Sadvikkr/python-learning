@@ -1,14 +1,22 @@
 class Employee:
-
+        
     def __init__(self, name, salary):
-        self.name = name
+        self.name = name 
         self.salary = salary
 
-e1 = Employee("Sadvik", 500000)    
-e2 = Employee("Aman", 700000)
+    def show_details(self):
+        print("Employee Name:", self.name)
+        print("Salary:", self.salary)
 
+    def check_salary(self):
 
-e1.salary = 600000
+        if self.salary >= 50000:
+            print("High Salary")
 
-print(e1.name)
-print(e1.salary)
+        else:
+            print("Normal Salary")
+
+e1 = Employee("Sadvik", 60000)
+
+e1.show_details()
+e1.check_salary()               
