@@ -1,4 +1,10 @@
 from fastapi import FastAPI
+from pydantic import BaseModel
+
+class Student(BaseModel):
+    name: str
+    age: int
+    marks: int
 
 app = FastAPI()
 
@@ -19,4 +25,11 @@ def get_student(id: int):
         "id": id,
         "name": "Sadvik",
         "marks": 89
+    }
+
+@app.post("/students")
+def create_student(student: Student):
+    return {
+        "message": "Student Created",
+        "student": student
     }
