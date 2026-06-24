@@ -84,3 +84,79 @@
 # response.json()
 # ↓
 # Python Dictionary
+
+
+# ==========================
+# PUT REQUEST
+# ==========================
+
+# PUT is used to UPDATE existing data.
+
+# Examples:
+# Update student marks
+# Update profile
+# Change password
+# Update order status
+
+# Example:
+# requests.put("student_api")
+
+# Flow:
+# Client
+# ↓
+# Send Updated Data
+# ↓
+# Server
+# ↓
+# Updates Existing Record
+
+
+# ==========================
+# DELETE REQUEST
+# ==========================
+
+# DELETE is used to REMOVE data.
+
+# Examples:
+# Delete student
+# Delete account
+# Delete product
+# Delete order
+
+# Example:
+# requests.delete("student_api")
+
+# Flow:
+# Client
+# ↓
+# Request Deletion
+# ↓
+# Server
+# ↓
+# Removes Record
+
+
+# ==========================
+# CRUD OPERATIONS
+# ==========================
+
+# Create -> POST
+# Read   -> GET
+# Update -> PUT
+# Delete -> DELETE
+
+
+# Student API Example
+
+# POST   /students
+# GET    /students
+# PUT    /students
+# DELETE /students
+
+
+# Employee API Example
+
+# Add Employee          -> POST
+# View Employee Details -> GET
+# Update Salary         -> PUT
+# Remove Employee       -> DELETE
