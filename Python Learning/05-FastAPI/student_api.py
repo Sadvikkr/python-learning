@@ -52,4 +52,40 @@ def create_student(student: Student):
         "student": student_data
     }
 
+@app.put("/students/{id}")
+def update_student(id : int, student: Student):  #What information does the backend need to complete this task?
+    student_data = student.model_dump()
+    
+    for student in students:
+        
+         if student["id"] == id:
+                student["name"] = student_data["name"]
+                student["age"] = student_data["age"]
+                student["marks"] = student_data["marks"]
+                
+                return student
+        
+    return {
+        "message": "Student not found"
+        }
+
+@app.delete("/students/{id}")
+def delete_student(id: int):
+    
+    for student in students:
+
+        if student["id"] == id:
+            students.remove(student)
+            return {"message" : "Successfully deleted student"}
+
+        
+    return {
+        "message" : "Student not found"
+    }
+            
+
+
+
+
+
     
