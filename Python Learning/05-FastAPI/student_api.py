@@ -20,6 +20,12 @@ students = [
         "name": "Aman",
         "age": 20,
         "marks": 95
+    },
+    {
+        "id": 3,
+        "name": "Aman",
+        "age": 19,
+        "marks": 76
     }
 ]
 
@@ -27,10 +33,39 @@ students = [
 def home():
     return {"message" : "Student API Running"}
 
-@app.get("/students")
-def get_students():
-    return students
+# @app.get("/students")
+# def get_students():
+#     return students
     
+@app.get("/students")
+def get_students(age: int = None, name: str = None):
+        
+        filtered_students = []
+        if age is None and name is None:
+            return students
+        
+        elif name is None and age is not None:  #Here student["age"] == age will not be applicable because student variable is not there , variables created inside a loop exist after the loop starts
+           
+            for student in students:
+              if student["age"] == age:
+                filtered_students.append(student)
+            return filtered_students   # outside the loop 
+
+        elif name is not None and age is None:
+            
+            for student in students:
+             if student["name"] == name:
+                filtered_students.append(student)
+            return filtered_students            
+
+        elif age is not None and name is not None:
+            for student in students:
+                if student["name"] == name and student["age"] == age:
+                    filtered_students.append(student)
+            return filtered_students        
+
+
+
 
 @app.get("/students/{id}")
 def get_student(id: int):
@@ -82,10 +117,11 @@ def delete_student(id: int):
     return {
         "message" : "Student not found"
     }
-            
+        
+           
 
-
-
+    
+        
 
 
     
