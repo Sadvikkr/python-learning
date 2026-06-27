@@ -1,32 +1,59 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
 
-class Student(BaseModel):
+app = FastAPI()
+
+class Student(BaseModel):   # to validate incoming data
     name: str
     age: int
     marks: int
+    email: str
+    password: str
+    phone: str
 
-app = FastAPI()
+class StudentResponse(BaseModel):  # to validate outgoing data 
+    name: str
+    age: int
+    marks: int
 
 students = [
     {
         "id": 1,
         "name": "Sadvik",
         "age": 19,
-        "marks": 89
+        "marks": 89,
+        "email": "sadvikkk@gmail.com",
+        "password": "123test@",
+        "phone": "9897456378"
     },
     {
         "id": 2,
         "name": "Aman",
         "age": 20,
-        "marks": 95
+        "marks": 95,
+        "email": "amankr@gmail.com",
+        "password": "87653wh",
+        "phone": "7623568987"
     },
     {
         "id": 3,
+        "name": "Ayush",
+        "age": 19,
+        "marks": 76,
+        "email": "ayush@gmai.com",
+        "password": "ayu6754",
+        "phone": "9967511125"
+    },
+    {
+        "id": 4,
         "name": "Aman",
         "age": 19,
-        "marks": 76
-    }
+        "marks": 90,
+        "email": "aman@gmail.com",
+        "password": "123456",
+        "phone": "9876543210"
+}
+
 ]
 
 @app.get("/")
@@ -37,7 +64,7 @@ def home():
 # def get_students():
 #     return students
     
-@app.get("/students")
+@app.get("/students", response_model = list[StudentResponse])
 def get_students(age: int = None, name: str = None, marks: int = None, sort: str = None, search: str = None, page: int = 1, limit: int = 10):
         
         filtered_students = students
@@ -230,7 +257,11 @@ def delete_student(id: int):
     return {
         "message" : "Student not found"
     }
-        
+
+
+
+
+
            
 
     
