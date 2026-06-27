@@ -38,7 +38,7 @@ def home():
 #     return students
     
 @app.get("/students")
-def get_students(age: int = None, name: str = None, marks: int = None, sort: str = None):
+def get_students(age: int = None, name: str = None, marks: int = None, sort: str = None, search: str = None):
         
         filtered_students = students
 
@@ -64,8 +64,16 @@ def get_students(age: int = None, name: str = None, marks: int = None, sort: str
             for student in filtered_students:
                 if student["marks"] == marks:
                     temp.append(student)
-            filtered_students = temp        
+            filtered_students = temp   
+                 
+        temp =[]
+        if search is not None:
+            for student in filtered_students:
+                if search.lower() in student["name"].lower() :
+                    temp.append(student)
+            filtered_students = temp    
         
+          
         if sort is not None:
             allowed_fields = ["id", "name", "age", "marks"]
             if sort in allowed_fields:
