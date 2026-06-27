@@ -38,7 +38,7 @@ def home():
 #     return students
     
 @app.get("/students")
-def get_students(age: int = None, name: str = None, marks: int = None, sort: str = None, search: str = None):
+def get_students(age: int = None, name: str = None, marks: int = None, sort: str = None, search: str = None, page: int = 1, limit: int = 10):
         
         filtered_students = students
 
@@ -65,7 +65,7 @@ def get_students(age: int = None, name: str = None, marks: int = None, sort: str
                 if student["marks"] == marks:
                     temp.append(student)
             filtered_students = temp   
-                 
+
         temp =[]
         if search is not None:
             for student in filtered_students:
@@ -73,29 +73,25 @@ def get_students(age: int = None, name: str = None, marks: int = None, sort: str
                     temp.append(student)
             filtered_students = temp    
         
-          
+         
         if sort is not None:
             allowed_fields = ["id", "name", "age", "marks"]
             if sort in allowed_fields:
                 sorted_students = sorted(filtered_students, key = lambda student : student[sort]  , reverse = False)
-                return sorted_students
+                filtered_students = sorted_students
             else:
                 return {"message": "Invalid sort field"}
         
+
+        start = ( page - 1) * limit
+        end = start + limit 
+        filtered_students = filtered_students[start:end]
+                         
+
+
         return filtered_students
-        
-
-        
-    
-  
 
 
-
-
-
-            
-            
-        
         # filtered_students = []
         # if age is None and name is None and marks is None: # None
         #    return students
