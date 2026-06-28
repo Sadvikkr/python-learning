@@ -1,20 +1,22 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
+from fastapi import HTTPException
+from pydantic import Field
 
 app = FastAPI()
 
 class Student(BaseModel):   # to validate incoming data
     name: str
-    age: int
-    marks: int
+    age: int = Field(ge=0)
+    marks: int = Field(ge=0, le=100)
     email: str
     password: str
     phone: str
 
 class StudentResponse(BaseModel):  # to validate outgoing data 
     name: str
-    age: int
-    marks: int
+    age: int = Field(ge=0)
+    marks: int = Field(ge=0, le=100)
 
 students = [
     {
@@ -60,9 +62,6 @@ students = [
 def home():
     return {"message" : "Student API Running"}
 
-# @app.get("/students")
-# def get_students():
-#     return students
     
 @app.get("/students", response_model = list[StudentResponse])
 def get_students(age: int = None, name: str = None, marks: int = None, sort: str = None, search: str = None, page: int = 1, limit: int = 10):
@@ -119,93 +118,6 @@ def get_students(age: int = None, name: str = None, marks: int = None, sort: str
         return filtered_students
 
 
-        # filtered_students = []
-        # if age is None and name is None and marks is None: # None
-        #    return students
-
-        # elif age is not None and name is None and marks is None:  # age
-
-        #     for student in students:
-        #         if student["age"] == age:
-        #             filtered_students.append(student)
-        #     return filtered_students 
-
-        # elif age is None and name is not None and marks is None:  # name 
-
-        #     for student in students:
-        #         if student["name"] == name:
-        #             filtered_students.append(student)
-        #     return filtered_students 
-
-        # elif age is None and name is None and marks is not None: # marks
-
-        #     for student in students:
-        #         if student["marks"] == marks:
-        #             filtered_students.append(student)
-        #     return filtered_students
-
-        # elif age is not None and name is not None and marks is None: # name , age    or age , name 
-        #     for student in students:
-        #         if student["name"] == name and student["age"] == age:
-        #             filtered_students.append(student)
-        #     return filtered_students 
-
-        # elif age is not None and name is None and marks is not None: # marks , age    or age , marks
-        #     for student in students:
-        #         if student["marks"] == marks and student["age"] == age:
-        #             filtered_students.append(student)
-        #     return filtered_students 
-        
-        # elif age is None and name is not None and marks is not None: # marks , name     or name , marks
-        #     for student in students:
-        #         if student["marks"] == marks and student["name"] == name:
-        #             filtered_students.append(student)
-        #     return filtered_students 
-        
-        # elif age is not None and name is not None and marks is not None: # age , marks , name 
-        #     for student in students:
-        #         if student["marks"] == marks and student["name"] == name and student["age"] == age:
-        #             filtered_students.append(student)
-        #     return filtered_students
-        
-        
-
-
-
-
-
-
-
-
-
-        # filtered_students = []
-        # if age is None and name is None:
-        #     return students
-        
-        # elif name is None and age is not None:  #Here student["age"] == age will not be applicable because student variable is not there , variables created inside a loop exist after the loop starts
-           
-        #     for student in students:
-        #       if student["age"] == age:
-        #         filtered_students.append(student)
-        #     return filtered_students # outside the loop
-
-        # elif name is not None and age is None:
-            
-        #     for student in students:
-        #      if student["name"] == name:
-        #         filtered_students.append(student)
-        #     return filtered_students            
-
-        # elif age is not None and name is not None:
-        #     for student in students:
-        #         if student["name"] == name and student["age"] == age:
-        #             filtered_students.append(student)
-        #     return filtered_students        
-
-        # sorted(students, key = student["marks"], reverse = False)  
-        # new_students = sorted(students)
-        # return new_students
-
 
 @app.get("/students/{id}")
 def get_student(id: int):
@@ -213,7 +125,11 @@ def get_student(id: int):
     for student in students:
         if student["id"] == id:
             return student
-          
+    raise HTTPException(
+        status_code= 404,
+        detail="Student Not Found"
+    )
+    
 @app.post("/students")
 def create_student(student: Student):
     student_data = student.model_dump()  # student.dict() can also be used 
@@ -221,11 +137,13 @@ def create_student(student: Student):
     student_data["id"] = next_id
 
     
-    students.append(student_data)   
+    students.append(student_data) 
+  
     return {
         "message": "Student Created",
         "student": student_data
     }
+       
 
 @app.put("/students/{id}")
 def update_student(id : int, student: Student):  #What information does the backend need to complete this task?
