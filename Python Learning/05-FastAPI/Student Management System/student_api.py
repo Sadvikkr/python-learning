@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Depends
 from pydantic import BaseModel
 from fastapi import HTTPException
 from pydantic import Field
@@ -63,14 +63,26 @@ students = [
 
 ]
 
+
+# def get_db():
+#     return "Database Connection"
+
+def get_current_user():
+    return {
+        "name": "Sadvik",
+        "role": "Admin"
+    }
+
+
 @app.get("/")
 def home():
     return {"message" : "Student API Running"}
 
     
 @app.get("/students", response_model = list[StudentResponse])
-def get_students(age: int = None, name: str = None, marks: int = None, sort: str = None, search: str = None, page: int = 1, limit: int = 10):
-        
+def get_students(user = Depends(get_current_user), age: int = None, name: str = None, marks: int = None, sort: str = None, search: str = None, page: int = 1, limit: int = 10):
+        print(user)
+
         filtered_students = students
 
         temp = []
